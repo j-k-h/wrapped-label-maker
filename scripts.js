@@ -70,7 +70,27 @@ window.addEventListener("keydown", event => {
 });
 
 // INPUT - SYMBOLS
+// Period
+window.addEventListener('keydown', function(e) {
+  if (e.keyCode == 190) {
+    var newPeriod = document.createElement("div");
+    newPeriod.classList.add('letter');
+    newPeriod.style.backgroundImage = "url('chars/period.svg')";
 
+    document.getElementById("wrapper").appendChild(newPeriod);
+  }
+});
+
+// Dash
+window.addEventListener('keydown', function(e) {
+  if (e.keyCode == 189) {
+    var newDash = document.createElement("div");
+    newDash.classList.add('letter');
+    newDash.style.backgroundImage = "url('chars/dash.svg')";
+
+    document.getElementById("wrapper").appendChild(newDash);
+  }
+});
 
 // INPUT - DELETE
 window.addEventListener('keydown', function(e) {
