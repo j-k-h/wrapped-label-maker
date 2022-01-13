@@ -67,6 +67,10 @@ window.addEventListener("keydown", event => {
     ["?", "questionmark", 191],
     [":", "colon", 186],
     ["+", "plus", 187],
+    ["_", "underscore", 189],
+    [">", "greaterthan", 190],
+    ["<", "lessthan", 188],
+    ["", "quote", 222],
   ];
 
   for (let i = 0; i < shiftSymbols.length; i++) {
@@ -85,12 +89,13 @@ window.addEventListener("keydown", event => {
     ["-", "dash", 189],
     ["/", "slash", 191],
     [`\\`, "backslash", 220],
-    // ["=", "equals", 187],
+    ["=", "equals", 187],
+    ["", "singlequote", 222],
   ];
 
   for (let i = 0; i < symbols.length; i++) {
     let symbolKeycode = symbols[i][2];
-    if (symbolKeycode == event.keyCode) {
+    if (symbolKeycode == event.keyCode && event.shiftKey == false) {
       var newSymbol = document.createElement("div");
       newSymbol.classList.add('letter');
       newSymbol.style.backgroundImage = "url('chars/" + symbols[i][1] + ".svg')";
