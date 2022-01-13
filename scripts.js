@@ -1,5 +1,4 @@
 // COLOR
-
 function setTheme() {
   var themes = [
     ["#9BEFE2", "invert(11%) sepia(87%) saturate(7340%) hue-rotate(261deg) brightness(81%) contrast(129%)"], // aqua blue, gobalt blue
@@ -23,22 +22,10 @@ function setTheme() {
   document.documentElement.style.setProperty('--foreground', foreground);
 }
 
-var letterCount = 0;
-
-// SPACING
-function countLetters() {
-  letterCount = document.getElementsByClassName("letter").length;
-
-  // document.documentElement.style.setProperty('--spacing', (letterCount + "rem"));
-
-  return letterCount;
-}
-
-
-// INPUT - ALPHABET
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
 window.addEventListener("keydown", event => {
+  // ALPHABET
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   for (let i = 0; i < alphabet.length; i++) {
     let letterKeycode = i + 65;
     if (letterKeycode == event.keyCode) {
@@ -50,15 +37,12 @@ window.addEventListener("keydown", event => {
       document.getElementById("wrapper").appendChild(newLetter);
     }
   }
-});
 
-// INPUT - NUMBERS
-const numbers = "0123456789".split("");
-
-window.addEventListener("keydown", event => {
+  // NUMBERS
+  const numbers = "0123456789".split("");
   for (let i = 0; i < numbers.length; i++) {
     let letterKeycode = i + 48;
-    if (letterKeycode == event.keyCode) {
+    if (letterKeycode == event.keyCode && event.shiftKey == false) {
       var letterLoop = numbers[i];
       var newLetter = document.createElement("div");
       newLetter.classList.add('letter');
@@ -67,55 +51,71 @@ window.addEventListener("keydown", event => {
       document.getElementById("wrapper").appendChild(newLetter);
     }
   }
-});
 
-// INPUT - SYMBOLS
-// Period
-window.addEventListener('keydown', function(e) {
-  if (e.keyCode == 190) {
-    var newPeriod = document.createElement("div");
-    newPeriod.classList.add('letter');
-    newPeriod.style.backgroundImage = "url('chars/period.svg')";
+  // SYMBOLS
+  const shiftSymbols = [
+    ["(", "l-parentheses", 57],
+    [")", "r-parentheses", 48],
+    ["!", "exclaimation", 49],
+    ["@", "at", 50],
+    ["#", "num", 51],
+    ["$", "dollar", 52],
+    ["%", "percent", 53],
+    ["^", "caret", 54],
+    ["&", "ampersand", 55],
+    ["*", "asterisk", 56],
+    ["?", "questionmark", 191],
+    [":", "colon", 186],
+    ["+", "plus", 187],
+  ];
 
-    document.getElementById("wrapper").appendChild(newPeriod);
+  for (let i = 0; i < shiftSymbols.length; i++) {
+    let symbolKeycode = shiftSymbols[i][2];
+    if (symbolKeycode == event.keyCode && event.shiftKey == true) {
+      var newSymbol = document.createElement("div");
+      newSymbol.classList.add('letter');
+      newSymbol.style.backgroundImage = "url('chars/" + shiftSymbols[i][1] + ".svg')";
+
+      document.getElementById("wrapper").appendChild(newSymbol);
+    }
   }
-});
 
-// Dash
-window.addEventListener('keydown', function(e) {
-  if (e.keyCode == 189) {
-    var newDash = document.createElement("div");
-    newDash.classList.add('letter');
-    newDash.style.backgroundImage = "url('chars/dash.svg')";
+  const symbols = [
+    [".", "period", 190],
+    ["-", "dash", 189],
+    ["/", "slash", 191],
+    [`\\`, "backslash", 220],
+    // ["=", "equals", 187],
+  ];
 
-    document.getElementById("wrapper").appendChild(newDash);
+  for (let i = 0; i < symbols.length; i++) {
+    let symbolKeycode = symbols[i][2];
+    if (symbolKeycode == event.keyCode) {
+      var newSymbol = document.createElement("div");
+      newSymbol.classList.add('letter');
+      newSymbol.style.backgroundImage = "url('chars/" + symbols[i][1] + ".svg')";
+
+      document.getElementById("wrapper").appendChild(newSymbol);
+    }
   }
-});
 
-// INPUT - DELETE
-window.addEventListener('keydown', function(e) {
-  if (e.keyCode == 8) {
-    var select = document.getElementById("wrapper");
-    select.removeChild(select.lastChild);
-    letterCount - 1;
-  }
-});
-
-// INPUT - SPACE
-window.addEventListener('keydown', function(e) {
-  if (e.keyCode == 32) {
+  // SPACE
+  if (event.keyCode == 32) {
     var newSpace = document.createElement("div");
     newSpace.classList.add('letter');
     newSpace.style.backgroundImage = "url('chars/space.svg')";
 
     document.getElementById("wrapper").appendChild(newSpace);
   }
-});
 
+  // DELETE
+  if (event.keyCode == 8) {
+    var select = document.getElementById("wrapper");
+    select.removeChild(select.lastChild);
+  }
 
-// INPUT - ENTER
-window.addEventListener('keydown', function(e) {
-  if (e.keyCode == 13) {
+  // ENTER
+  if (event.keyCode == 13) {
     document.getElementById("wrapper").innerHTML = "";
     setTheme();
   }
